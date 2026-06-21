@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lolly Food Box | Your Taste, Our Satisfaction</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="loader" id="loader">
+    <img src="assets/logo.jpg" alt="Lolly Food Box logo">
+    <p>Preparing something tasty...</p>
+  </div>
+
+  <header class="header" id="header">
+    <a href="#home" class="brand">
+      <img src="assets/logo.jpg" alt="Lolly Food Box logo">
+      <span>Lolly Food Box</span>
+    </a>
+    <button class="nav-toggle" id="navToggle" aria-label="Open navigation">☰</button>
+    <nav class="nav" id="nav">
+      <a href="#home">Home</a>
+      <a href="#menu">Menu</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#order">Order</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="hero-text reveal">
+        <span class="eyebrow">🔥 Shawarma • Gelato • Chicken & Chips</span>
+        <h1>Your cravings have officially met their match.</h1>
+        <p>Lolly Food Box serves grilled chicken, crispy fries, creamy ice cream, juicy burgers, shawarma and refreshing drinks in Oke-Aro, Ogun State.</p>
+        <div class="hero-actions">
+          <a href="#menu" class="btn primary">Explore Menu</a>
+          <a href="#order" class="btn ghost">Order Now</a>
+        </div>
+        <div class="stats">
+          <div><strong>Fresh</strong><span>daily meals</span></div>
+          <div><strong>Fast</strong><span>pickup & orders</span></div>
+          <div><strong>Tasty</strong><span>every bite</span></div>
+        </div>
+      </div>
+      <div class="hero-visual reveal">
+        <div class="blob"></div>
+        <img class="hero-food" src="assets/chicken-fries.png" alt="Grilled chicken and fries">
+        <div class="floating-card top">🍦 Creamy Gelato</div>
+        <div class="floating-card bottom">🍗 Chicken & Chips</div>
+      </div>
+    </section>
+
+    <section class="section specials">
+      <div class="section-head reveal">
+        <span class="eyebrow">Customer favourites</span>
+        <h2>Popular picks</h2>
+        <p>The food that makes people abandon financial discipline. Nature is healing, apparently.</p>
+      </div>
+      <div class="special-grid">
+        <article class="food-card reveal">
+          <img src="assets/chicken-fries.png" alt="Chicken and fries">
+          <div><h3>Chicken & Fries</h3><p>Smoky grilled chicken with golden crispy fries and sauce.</p><span>From ₦3,500</span></div>
+        </article>
+        <article class="food-card reveal">
+          <img src="assets/shawarma.png" alt="Shawarma">
+          <div><h3>Loaded Shawarma</h3><p>Soft wrap, juicy filling, crunchy veggies and creamy sauce.</p><span>From ₦2,000</span></div>
+        </article>
+        <article class="food-card reveal">
+          <img src="assets/icecream.png" alt="Ice cream">
+          <div><h3>Ice Cream & Gelato</h3><p>Chocolate, coconut, banana and other cool flavours.</p><span>From ₦1,000</span></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section menu" id="menu">
+      <div class="section-head reveal">
+        <span class="eyebrow">Our menu</span>
+        <h2>What are you craving?</h2>
+      </div>
+      <div class="menu-grid">
+        <div class="menu-item reveal"><span>🍗</span><div><h3>Grilled Chicken</h3><p>Well-seasoned, smoky and filling.</p></div></div>
+        <div class="menu-item reveal"><span>🍟</span><div><h3>French Fries</h3><p>Golden, crispy and sauce-ready.</p></div></div>
+        <div class="menu-item reveal"><span>🌯</span><div><h3>Shawarma</h3><p>Perfectly wrapped and loaded.</p></div></div>
+        <div class="menu-item reveal"><span>🍔</span><div><h3>Burgers</h3><p>Soft buns, juicy layers, big appetite energy.</p></div></div>
+        <div class="menu-item reveal"><span>🍦</span><div><h3>Ice Cream / Gelato</h3><p>Cold, creamy flavours for hot days.</p></div></div>
+        <div class="menu-item reveal"><span>🥤</span><div><h3>Drinks</h3><p>Cold soft drinks to complete your meal.</p></div></div>
+      </div>
+    </section>
+
+    <section class="section why">
+      <div class="why-text reveal">
+        <span class="eyebrow">Why Lolly?</span>
+        <h2>Your taste, our satisfaction.</h2>
+        <p>Good packaging, tasty portions, sweet desserts and meal combos that do not look like sadness in a plastic plate.</p>
+        <ul>
+          <li>Freshly prepared food</li>
+          <li>Nice branded packaging</li>
+          <li>Meals, snacks and desserts in one place</li>
+          <li>Easy WhatsApp ordering</li>
+        </ul>
+      </div>
+      <div class="why-card reveal">
+        <img src="assets/box.png" alt="Lolly Food Box packaging">
+      </div>
+    </section>
+
+    <section class="section gallery" id="gallery">
+      <div class="section-head reveal">
+        <span class="eyebrow">Gallery</span>
+        <h2>Food that actually looks like food</h2>
+      </div>
+      <div class="gallery-grid">
+        <img class="reveal" src="assets/burger.png" alt="Burger and fries">
+        <img class="reveal tall" src="assets/gallery.png" alt="Lolly Food Box combo">
+        <img class="reveal" src="assets/wrap.png" alt="Shawarma and fries">
+        <img class="reveal" src="assets/icecream.png" alt="Ice cream flavours">
+      </div>
+    </section>
+
+    <section class="section testimonials">
+      <div class="section-head reveal">
+        <span class="eyebrow">Reviews</span>
+        <h2>What customers love</h2>
+      </div>
+      <div class="review-grid">
+        <article class="review reveal"><p>“The chicken and chips combo is filling and tasty.”</p><strong>Happy Customer</strong></article>
+        <article class="review reveal"><p>“Their ice cream flavours are perfect after school or work.”</p><strong>Sweet Tooth</strong></article>
+        <article class="review reveal"><p>“The packaging makes the food feel premium.”</p><strong>Food Lover</strong></article>
+      </div>
+    </section>
+
+    <section class="section order" id="order">
+      <div class="order-card reveal">
+        <span class="eyebrow">Ready to eat?</span>
+        <h2>Order your Lolly Food Box combo today.</h2>
+        <p>Tap WhatsApp, choose your meal, and let hunger stop embarrassing you in public.</p>
+        <form id="orderForm">
+          <input type="text" id="name" placeholder="Your name" required>
+          <select id="meal" required>
+            <option value="">Choose meal</option>
+            <option>Chicken & Fries</option>
+            <option>Shawarma</option>
+            <option>Burger Combo</option>
+            <option>Ice Cream / Gelato</option>
+            <option>Custom Order</option>
+          </select>
+          <input type="text" id="location" placeholder="Pickup/delivery location" required>
+          <button class="btn primary" type="submit">Order on WhatsApp</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" id="contact">
+    <div>
+      <img src="assets/logo.jpg" alt="Lolly Food Box logo">
+      <h2>Lolly Food Box</h2>
+      <p>Your taste, our satisfaction.</p>
+    </div>
+    <div>
+      <h3>Visit Us</h3>
+      <p>Oke-Aro, Ogun State, Nigeria</p>
+      <p>Open daily for snacks, meals and desserts.</p>
+    </div>
+    <div>
+      <h3>Contact</h3>
+      <p>WhatsApp: +234 903 371 3869</p>
+      <p>Instagram: @lolly_food_box</p>
+    </div>
+  </footer>
+
+  <a class="whatsapp" href="https://wa.me/2349033713869?text=Hello%20Lolly%20Food%20Box%2C%20I%20want%20to%20place%20an%20order" target="_blank" aria-label="Order on WhatsApp">💬</a>
+
+  <script src="script.js"></script>
+</body>
+</html>
