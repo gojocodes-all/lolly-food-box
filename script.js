@@ -6,8 +6,17 @@ window.addEventListener('scroll', () => header.classList.toggle('scrolled', wind
 
 const navToggle = document.getElementById('navToggle');
 const nav = document.getElementById('nav');
-navToggle.addEventListener('click', () => nav.classList.toggle('active'));
-document.querySelectorAll('.nav a').forEach(link => link.addEventListener('click', () => nav.classList.remove('active')));
+
+const setNavOpen = (isOpen) => {
+  nav.classList.toggle('active', isOpen);
+  navToggle.setAttribute('aria-expanded', String(isOpen));
+  navToggle.setAttribute('aria-label', isOpen ? 'Close navigation' : 'Open navigation');
+};
+
+navToggle.setAttribute('aria-controls', 'nav');
+setNavOpen(false);
+navToggle.addEventListener('click', () => setNavOpen(!nav.classList.contains('active')));
+document.querySelectorAll('.nav a').forEach(link => link.addEventListener('click', () => setNavOpen(false)));
 
 const observer = new IntersectionObserver(entries => {
   entries.forEach(entry => {
