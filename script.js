@@ -26,11 +26,30 @@ const observer = new IntersectionObserver(entries => {
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
 const form = document.getElementById('orderForm');
+const nameInput = document.getElementById('name');
+const mealInput = document.getElementById('meal');
+const locationInput = document.getElementById('location');
+
+const readRequiredText = (input, message) => {
+  const value = input.value.trim();
+  input.setCustomValidity(value ? '' : message);
+  if (!value) input.reportValidity();
+  return value;
+};
+
+[nameInput, locationInput].forEach(input => {
+  input.addEventListener('input', () => input.setCustomValidity(''));
+});
+
 form.addEventListener('submit', (e) => {
   e.preventDefault();
-  const name = document.getElementById('name').value.trim();
-  const meal = document.getElementById('meal').value;
-  const location = document.getElementById('location').value.trim();
+  const name = readRequiredText(nameInput, 'Please enter your name.');
+  if (!name) return;
+
+  const location = readRequiredText(locationInput, 'Please enter a pickup or delivery location.');
+  if (!location) return;
+
+  const meal = mealInput.value;
   const msg = `Hello Lolly Food Box, my name is ${name}. I want to order: ${meal}. Location: ${location}.`;
-  window.open(`https://wa.me/2349033713869?text=${encodeURIComponent(msg)}`, '_blank');
+  window.open(`https://wa.me/2349033713869?text=${encodeURIComponent(msg)}`, '_blank', 'noopener');
 });
