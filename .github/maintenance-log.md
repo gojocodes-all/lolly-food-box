@@ -1,5 +1,13 @@
 # Maintenance log
 
+## 2026-10-03 — Reject blank order details
+
+- **Rationale:** Browser `required` validation accepts whitespace-only text. The order handler trimmed those values but still opened WhatsApp, allowing an order message with a blank customer name or pickup/delivery location.
+- **Files changed:** `script.js`, `test/order-form.test.js`, `package.json`, `README.md`, and `.github/maintenance-log.md`.
+- **Validation performed:** Ran `npm test` (three tests), `node --check script.js`, `node --check test/order-form.test.js`, README path and command checks, and `git diff --check`.
+- **Risk level:** Low. Valid orders retain the same destination and message format; only whitespace-only fields are rejected with native validation feedback. New WhatsApp tabs no longer retain opener access.
+- **Rollback:** Revert this change to restore the previous submit handler and remove the dependency-free regression harness.
+
 ## 2026-09-24 — Document setup, ordering, and maintenance
 
 - **Rationale:** The static site had no repository documentation or ignore rules, leaving its purpose, local preview workflow, WhatsApp ordering behaviour, content update points, and current limitations undocumented.

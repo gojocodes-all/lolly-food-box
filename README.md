@@ -20,8 +20,10 @@ The current stylesheet does not provide a reduced-motion override, so motion-sen
 .
 ├── assets/       Local logo and food photography
 ├── index.html    Page content, navigation, order form, and metadata
+├── package.json  Dependency-free test command and supported Node.js version
 ├── script.js     Loader, navigation, reveal effects, and WhatsApp ordering
-└── style.css     Visual design and responsive layouts
+├── style.css     Visual design and responsive layouts
+└── test/         Order-form regression tests
 ```
 
 ## Run locally
@@ -58,9 +60,10 @@ The page also requests the Fredoka and Poppins fonts from Google Fonts when it l
 
 ## Validation
 
-Run the JavaScript syntax check:
+The automated tests require Node.js 20 or newer but do not require package installation. Run:
 
 ```bash
+npm test
 node --check script.js
 ```
 
