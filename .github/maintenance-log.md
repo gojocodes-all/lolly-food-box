@@ -1,5 +1,24 @@
 # Maintenance log
 
+## 2026-10-06 — Add hosted validation and site integrity coverage
+
+- **Rationale:** The repository had focused order-form tests, but no hosted
+  workflow enforced them on pull requests or changes to `main`. Static resource
+  paths, fragment links, and the duplicated WhatsApp destination were also
+  maintained manually and could drift without a failing check.
+- **Files changed:** `.github/workflows/ci.yml`,
+  `test/site-integrity.test.js`, `README.md`, and
+  `.github/maintenance-log.md`.
+- **Validation performed:** Ran JavaScript syntax checks and all six
+  dependency-free Node.js tests in hosted CI; reviewed workflow permissions,
+  immutable action revisions, timeout, concurrency, path handling, and the
+  complete diff.
+- **Risk level:** Low. The workflow has read-only repository permission and
+  does not install dependencies, publish artifacts, or change the static site.
+  The tests only read committed files.
+- **Rollback:** Revert the pull request's squash commit to remove the workflow,
+  integrity tests, README note, and this maintenance entry.
+
 ## 2026-10-03 — Reject blank order details
 
 - **Rationale:** Browser `required` validation accepts whitespace-only text. The order handler trimmed those values but still opened WhatsApp, allowing an order message with a blank customer name or pickup/delivery location.
