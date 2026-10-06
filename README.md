@@ -67,6 +67,11 @@ npm test
 node --check script.js
 ```
 
+GitHub Actions runs the syntax check and all tests for pull requests and changes
+to `main`. In addition to the order-form behavior, the suite verifies that local
+resources exist, fragment links resolve, and every WhatsApp order path matches
+the published contact number.
+
 Before publishing a content change:
 
 - Confirm every local image reference exists.
