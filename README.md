@@ -7,12 +7,12 @@ A responsive, single-page website for Lolly Food Box in Oke-Aro, Ogun State. The
 - Presents menu categories, selected prices, gallery images, and store details.
 - Provides responsive desktop and mobile navigation.
 - Reveals page sections as they enter the viewport.
+- Respects the visitor's reduced-motion preference by skipping delayed and
+  animated entrances.
 - Builds a prefilled WhatsApp message from the customer's name, meal choice, and pickup or delivery location.
 - Provides a separate floating WhatsApp shortcut.
 
 The site does not contain a cart, payment processing, inventory management, account system, or server-side order storage. Menu information, prices, reviews, and contact details are static page content.
-
-The current stylesheet does not provide a reduced-motion override, so motion-sensitive visitors may still see the loader, floating artwork, and reveal animations.
 
 ## Project structure
 
@@ -20,10 +20,10 @@ The current stylesheet does not provide a reduced-motion override, so motion-sen
 .
 ├── assets/       Local logo and food photography
 ├── index.html    Page content, navigation, order form, and metadata
-├── package.json  Dependency-free test command and supported Node.js version
+├── package.json  Dependency-free validation commands and Node.js version
 ├── script.js     Loader, navigation, reveal effects, and WhatsApp ordering
 ├── style.css     Visual design and responsive layouts
-└── test/         Order-form regression tests
+└── test/         Behavior, accessibility, and static-integrity tests
 ```
 
 ## Run locally
@@ -63,14 +63,13 @@ The page also requests the Fredoka and Poppins fonts from Google Fonts when it l
 The automated tests require Node.js 20 or newer but do not require package installation. Run:
 
 ```bash
-npm test
-node --check script.js
+npm run validate
 ```
 
-GitHub Actions runs the syntax check and all tests for pull requests and changes
-to `main`. In addition to the order-form behavior, the suite verifies that local
-resources exist, fragment links resolve, and every WhatsApp order path matches
-the published contact number.
+GitHub Actions runs the same syntax and test command for pull requests and
+changes to `main`. In addition to the order-form behavior, the suite verifies
+the reduced-motion runtime path, local resources, fragment links, and that every
+WhatsApp order path matches the published contact number.
 
 Before publishing a content change:
 
@@ -78,7 +77,7 @@ Before publishing a content change:
 - Test the navigation at desktop and mobile widths.
 - Submit a sample order and verify the generated WhatsApp message and destination.
 - Check keyboard focus and visible focus states when changing interactions.
-- Add and test a reduced-motion alternative before expanding the animation system.
+- Preserve and test the reduced-motion path when expanding the animation system.
 
 ## Deployment
 

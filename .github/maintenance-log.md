@@ -1,5 +1,26 @@
 # Maintenance log
 
+## 2026-10-09 — Respect reduced-motion preferences
+
+- **Rationale:** The site documented reduced motion as an accessibility gap.
+  Visitors who request less motion still received a delayed loading screen,
+  continuous hero animation, smooth scrolling, and scroll-triggered entrance
+  transitions.
+- **Files changed:** `script.js` skips the loader delay and reveals content
+  immediately for reduced-motion visitors; `style.css` disables motion and
+  smooth scrolling under the operating-system preference;
+  `test/motion-preference.test.js` covers both runtime paths; `package.json`
+  and `.github/workflows/ci.yml` expose one shared validation command; `README.md`
+  documents the behavior; and `.github/maintenance-log.md` records the work.
+- **Validation performed:** `npm run validate`, workflow YAML parsing,
+  `git diff --check`, and a complete diff review covering accessibility,
+  unchanged default animation behavior, security, and backward compatibility.
+- **Risk level:** Low. The default experience is unchanged. The alternate path
+  activates only when the browser reports `prefers-reduced-motion: reduce`,
+  adds no dependency, and leaves ordering and navigation behavior untouched.
+- **Rollback:** Revert the pull request's squash commit to restore the delayed
+  loader and animated reveal path for every visitor.
+
 ## 2026-10-06 — Add hosted validation and site integrity coverage
 
 - **Rationale:** The repository had focused order-form tests, but no hosted

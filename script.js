@@ -1,5 +1,11 @@
 const loader = document.getElementById('loader');
-window.addEventListener('load', () => setTimeout(() => loader.classList.add('hide'), 650));
+const prefersReducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
+
+window.addEventListener('load', () => {
+  const hideLoader = () => loader.classList.add('hide');
+  if (prefersReducedMotion) hideLoader();
+  else setTimeout(hideLoader, 650);
+});
 
 const header = document.getElementById('header');
 window.addEventListener('scroll', () => header.classList.toggle('scrolled', window.scrollY > 20));
@@ -18,12 +24,18 @@ setNavOpen(false);
 navToggle.addEventListener('click', () => setNavOpen(!nav.classList.contains('active')));
 document.querySelectorAll('.nav a').forEach(link => link.addEventListener('click', () => setNavOpen(false)));
 
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) entry.target.classList.add('show');
-  });
-}, { threshold: 0.15 });
-document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+const revealItems = document.querySelectorAll('.reveal');
+
+if (prefersReducedMotion) {
+  revealItems.forEach(element => element.classList.add('show'));
+} else {
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('show');
+    });
+  }, { threshold: 0.15 });
+  revealItems.forEach(element => observer.observe(element));
+}
 
 const form = document.getElementById('orderForm');
 const nameInput = document.getElementById('name');
