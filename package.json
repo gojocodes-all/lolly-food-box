@@ -2,7 +2,9 @@
   "name": "lolly-food-box",
   "private": true,
   "scripts": {
-    "test": "node --test"
+    "check": "node --check script.js && node --check test/motion-preference.test.js && node --check test/order-form.test.js && node --check test/site-integrity.test.js",
+    "test": "node --test",
+    "validate": "npm run check && npm test"
   },
   "engines": {
     "node": ">=20"
