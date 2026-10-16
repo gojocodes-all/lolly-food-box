@@ -21,7 +21,8 @@ function createElement() {
     },
     addEventListener(type, listener) { listeners.set(type, listener); },
     dispatch(type, event = {}) { return listeners.get(type)?.(event); },
-    reportValidity() {},
+    reportCount: 0,
+    reportValidity() { this.reportCount += 1; },
     setAttribute() {},
     setCustomValidity() {},
     value: '',
@@ -114,7 +115,7 @@ test('missing IntersectionObserver reveals content and keeps the order form init
   assert.doesNotThrow(() => {
     elements.orderForm.dispatch('submit', { preventDefault() {} });
   });
-  assert.equal(elements.name.reportCount, undefined);
+  assert.equal(elements.name.reportCount, 1);
 });
 
 test('the stylesheet removes animation, transitions, and smooth scrolling', () => {
