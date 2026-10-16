@@ -26,7 +26,7 @@ document.querySelectorAll('.nav a').forEach(link => link.addEventListener('click
 
 const revealItems = document.querySelectorAll('.reveal');
 
-if (prefersReducedMotion) {
+if (prefersReducedMotion || typeof IntersectionObserver !== 'function') {
   revealItems.forEach(element => element.classList.add('show'));
 } else {
   const observer = new IntersectionObserver(entries => {
