@@ -21,14 +21,15 @@ function createElement() {
     },
     addEventListener(type, listener) { listeners.set(type, listener); },
     dispatch(type, event = {}) { return listeners.get(type)?.(event); },
-    reportValidity() {},
+    reportCount: 0,
+    reportValidity() { this.reportCount += 1; },
     setAttribute() {},
     setCustomValidity() {},
     value: '',
   };
 }
 
-function loadSite({ reduceMotion }) {
+function loadSite({ reduceMotion, supportsIntersectionObserver = true }) {
   const elements = {
     header: createElement(),
     loader: createElement(),
@@ -51,9 +52,6 @@ function loadSite({ reduceMotion }) {
         return selector === '.reveal' ? revealItems : [];
       },
     },
-    IntersectionObserver: class {
-      observe(element) { observed.push(element); }
-    },
     setTimeout(callback, delay) { scheduled.push({ callback, delay }); },
     window: {
       addEventListener(type, listener) { windowListeners.set(type, listener); },
@@ -65,6 +63,12 @@ function loadSite({ reduceMotion }) {
       scrollY: 0,
     },
   };
+
+  if (supportsIntersectionObserver) {
+    context.IntersectionObserver = class {
+      observe(element) { observed.push(element); }
+    };
+  }
 
   vm.runInNewContext(scriptSource, context);
 
@@ -98,6 +102,20 @@ test('default motion keeps the existing delayed loader and reveal observer', () 
 
   scheduled[0].callback();
   assert.equal(elements.loader.classList.contains('hide'), true);
+});
+
+test('missing IntersectionObserver reveals content and keeps the order form initialized', () => {
+  const { elements, observed, revealItems } = loadSite({
+    reduceMotion: false,
+    supportsIntersectionObserver: false,
+  });
+
+  assert.equal(observed.length, 0);
+  assert.ok(revealItems.every(element => element.classList.contains('show')));
+  assert.doesNotThrow(() => {
+    elements.orderForm.dispatch('submit', { preventDefault() {} });
+  });
+  assert.equal(elements.name.reportCount, 1);
 });
 
 test('the stylesheet removes animation, transitions, and smooth scrolling', () => {

@@ -1,5 +1,26 @@
 # Maintenance log
 
+## 2026-10-16 — Keep content visible without IntersectionObserver
+
+- **Rationale:** Every major section, including the ordering interface, starts
+  transparent and relied on `IntersectionObserver` to become visible. Browsers
+  and embedded webviews without that API threw during startup, leaving the page
+  blank and preventing the order form from initializing.
+- **Files changed:** `script.js` now feature-detects the observer and reveals
+  existing content immediately when it is unavailable;
+  `test/motion-preference.test.js` covers the unsupported-browser path; and
+  `.github/maintenance-log.md` records the work.
+- **Validation performed:** Ran `npm run validate`, including JavaScript syntax
+  checks and the complete dependency-free Node.js test suite; reviewed the
+  complete diff for accessibility, security, mobile behavior, and backward
+  compatibility. Browser plugin was unavailable, so the unsupported API path
+  was exercised through the repository's VM-based browser harness.
+- **Risk level:** Low. Browsers with `IntersectionObserver` retain the existing
+  scroll-triggered animation. The fallback only makes already-rendered content
+  visible and leaves navigation, ordering, contact details, and styling intact.
+- **Rollback:** Revert this pull request's squash commit to restore the
+  observer-only reveal path.
+
 ## 2026-10-09 — Respect reduced-motion preferences
 
 - **Rationale:** The site documented reduced motion as an accessibility gap.
