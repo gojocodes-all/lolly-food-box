@@ -1,5 +1,28 @@
 # Maintenance log
 
+## 2026-10-23 — Stop observing revealed sections
+
+- **Rationale:** Scroll-reveal elements stayed registered with the shared
+  `IntersectionObserver` after their one-time transition completed. Every later
+  viewport crossing therefore kept invoking callbacks for content whose
+  visible state could no longer change.
+- **Files changed:** `script.js` now removes each visible element from the
+  observer after adding its permanent `show` class;
+  `test/motion-preference.test.js` verifies that visible entries are revealed
+  and unobserved while non-visible entries remain pending; and
+  `.github/maintenance-log.md` records the work.
+- **Validation performed:** Ran `npm run validate`, including JavaScript syntax
+  checks and the complete dependency-free Node.js test suite; reproduced the
+  previous observer leak with the focused test before applying the fix; and
+  reviewed the complete diff for reveal behavior, reduced-motion and fallback
+  paths, browser compatibility, and repository conventions.
+- **Risk level:** Low. The observer already reveals each section permanently.
+  The change only stops tracking elements after that irreversible transition;
+  unrevealed sections, reduced-motion visitors, unsupported-browser fallback,
+  navigation, and ordering behavior are unchanged.
+- **Rollback:** Revert this pull request's squash commit to keep revealed
+  elements registered with the observer for the lifetime of the page.
+
 ## 2026-10-16 — Keep content visible without IntersectionObserver
 
 - **Rationale:** Every major section, including the ordering interface, starts
