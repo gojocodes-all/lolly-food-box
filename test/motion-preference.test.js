@@ -42,8 +42,10 @@ function loadSite({ reduceMotion, supportsIntersectionObserver = true }) {
   };
   const revealItems = [createElement(), createElement()];
   const observed = [];
+  const unobserved = [];
   const scheduled = [];
   const windowListeners = new Map();
+  let intersectionCallback;
 
   const context = {
     document: {
@@ -66,13 +68,23 @@ function loadSite({ reduceMotion, supportsIntersectionObserver = true }) {
 
   if (supportsIntersectionObserver) {
     context.IntersectionObserver = class {
+      constructor(callback) { intersectionCallback = callback; }
       observe(element) { observed.push(element); }
+      unobserve(element) { unobserved.push(element); }
     };
   }
 
   vm.runInNewContext(scriptSource, context);
 
-  return { elements, observed, revealItems, scheduled, windowListeners };
+  return {
+    elements,
+    intersectionCallback,
+    observed,
+    revealItems,
+    scheduled,
+    unobserved,
+    windowListeners,
+  };
 }
 
 test('reduced motion skips delayed loading and reveals content immediately', () => {
@@ -89,11 +101,27 @@ test('reduced motion skips delayed loading and reveals content immediately', () 
 });
 
 test('default motion keeps the existing delayed loader and reveal observer', () => {
-  const { elements, observed, revealItems, scheduled, windowListeners } =
+  const {
+    elements,
+    intersectionCallback,
+    observed,
+    revealItems,
+    scheduled,
+    unobserved,
+    windowListeners,
+  } =
     loadSite({ reduceMotion: false });
 
   assert.deepEqual(observed, revealItems);
   assert.ok(revealItems.every(element => !element.classList.contains('show')));
+
+  intersectionCallback([
+    { isIntersecting: true, target: revealItems[0] },
+    { isIntersecting: false, target: revealItems[1] },
+  ]);
+  assert.equal(revealItems[0].classList.contains('show'), true);
+  assert.equal(revealItems[1].classList.contains('show'), false);
+  assert.deepEqual(unobserved, [revealItems[0]]);
 
   windowListeners.get('load')();
   assert.equal(scheduled.length, 1);

@@ -31,7 +31,9 @@ if (prefersReducedMotion || typeof IntersectionObserver !== 'function') {
 } else {
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
-      if (entry.isIntersecting) entry.target.classList.add('show');
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('show');
+      observer.unobserve(entry.target);
     });
   }, { threshold: 0.15 });
   revealItems.forEach(element => observer.observe(element));
