@@ -1,5 +1,29 @@
 # Maintenance log
 
+## 2026-10-30 — Add persistent labels to the order form
+
+- **Rationale:** The primary ordering form identified text fields only through
+  placeholders and identified the meal selector only through its first option.
+  Those prompts are not persistent once a customer enters a value, and the
+  controls had no explicit label associations for assistive technology.
+- **Files changed:** `index.html` groups each order field with a visible,
+  programmatically associated label and adds appropriate name and address
+  autocomplete hints; `style.css` preserves the two-column desktop and
+  single-column mobile layouts while adding high-contrast field focus styles;
+  `test/site-integrity.test.js` covers label associations and autocomplete
+  metadata; `README.md` documents the form behavior; and this log records the
+  work.
+- **Validation performed:** Ran `npm run validate`, including JavaScript syntax
+  checks and the complete dependency-free Node.js test suite; served the site
+  locally; and reviewed the complete diff for form behavior, accessibility,
+  responsive layout, security, backward compatibility, and repository
+  conventions.
+- **Risk level:** Low. Field IDs, required validation, meal values, WhatsApp
+  destination, encoded message format, and submit behavior are unchanged. The
+  change adds semantic markup, browser hints, and layout styling only.
+- **Rollback:** Revert this pull request's squash commit to restore the
+  placeholder-only form and its previous grid selectors.
+
 ## 2026-10-23 — Stop observing revealed sections
 
 - **Rationale:** Scroll-reveal elements stayed registered with the shared

@@ -139,16 +139,25 @@
         <h2>Order your Lolly Food Box combo today.</h2>
         <p>Tap WhatsApp, choose your meal, and let hunger stop embarrassing you in public.</p>
         <form id="orderForm">
-          <input type="text" id="name" placeholder="Your name" required>
-          <select id="meal" required>
-            <option value="">Choose meal</option>
-            <option>Chicken & Fries</option>
-            <option>Shawarma</option>
-            <option>Burger Combo</option>
-            <option>Ice Cream / Gelato</option>
-            <option>Custom Order</option>
-          </select>
-          <input type="text" id="location" placeholder="Pickup/delivery location" required>
+          <div class="form-field">
+            <label for="name">Your name</label>
+            <input type="text" id="name" autocomplete="name" required>
+          </div>
+          <div class="form-field">
+            <label for="meal">Meal</label>
+            <select id="meal" required>
+              <option value="">Choose meal</option>
+              <option>Chicken & Fries</option>
+              <option>Shawarma</option>
+              <option>Burger Combo</option>
+              <option>Ice Cream / Gelato</option>
+              <option>Custom Order</option>
+            </select>
+          </div>
+          <div class="form-field full">
+            <label for="location">Pickup or delivery location</label>
+            <input type="text" id="location" autocomplete="street-address" required>
+          </div>
           <button class="btn primary" type="submit">Order on WhatsApp</button>
         </form>
       </div>
