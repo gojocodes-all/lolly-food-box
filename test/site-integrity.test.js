@@ -37,3 +37,19 @@ test('all WhatsApp order paths use the published contact number', () => {
   assert.equal(endpointNumbers.length, 2);
   assert.deepEqual([...new Set(endpointNumbers)], [contactNumber]);
 });
+
+test('order fields have persistent labels and useful autocomplete hints', () => {
+  const form = html.match(/<form\s+id="orderForm">([\s\S]*?)<\/form>/)?.[1];
+  assert.ok(form, 'Expected the WhatsApp order form');
+
+  for (const id of ['name', 'meal', 'location']) {
+    assert.match(form, new RegExp(`<label\\s+for="${id}"[^>]*>[^<]+<\\/label>`));
+    assert.match(form, new RegExp(`<(?:input|select)[^>]+id="${id}"`));
+  }
+
+  assert.match(form, /<input[^>]+id="name"[^>]+autocomplete="name"/);
+  assert.match(
+    form,
+    /<input[^>]+id="location"[^>]+autocomplete="street-address"/,
+  );
+});

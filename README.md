@@ -10,6 +10,7 @@ A responsive, single-page website for Lolly Food Box in Oke-Aro, Ogun State. The
 - Respects the visitor's reduced-motion preference by skipping delayed and
   animated entrances.
 - Builds a prefilled WhatsApp message from the customer's name, meal choice, and pickup or delivery location.
+- Keeps persistent labels on every order field and offers browser autocomplete for the customer's name and address.
 - Provides a separate floating WhatsApp shortcut.
 
 The site does not contain a cart, payment processing, inventory management, account system, or server-side order storage. Menu information, prices, reviews, and contact details are static page content.
