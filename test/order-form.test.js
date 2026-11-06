@@ -24,7 +24,12 @@ function createElement(value = '') {
   };
 }
 
-function loadOrderForm({ name = '', meal = 'Shawarma', location = '' } = {}) {
+function loadOrderForm({
+  name = '',
+  meal = 'Shawarma',
+  location = '',
+  whatsappUrl = 'https://wa.me/2349033713869?text=Place%20an%20order',
+} = {}) {
   const elements = {
     loader: createElement(),
     header: createElement(),
@@ -34,6 +39,10 @@ function loadOrderForm({ name = '', meal = 'Shawarma', location = '' } = {}) {
     name: createElement(name),
     meal: createElement(meal),
     location: createElement(location),
+    whatsappLink: {
+      ...createElement(),
+      href: whatsappUrl,
+    },
   };
   const opened = [];
   const context = {
@@ -45,6 +54,7 @@ function loadOrderForm({ name = '', meal = 'Shawarma', location = '' } = {}) {
       observe() {}
     },
     setTimeout,
+    URL,
     window: {
       addEventListener() {},
       open(...args) { opened.push(args); },
@@ -88,4 +98,17 @@ test('opens a complete encoded order without opener access', () => {
   );
   assert.equal(target, '_blank');
   assert.equal(features, 'noopener');
+});
+
+test('uses the published WhatsApp link as the order destination', () => {
+  const { opened } = loadOrderForm({
+    name: 'Ada',
+    location: 'Oke-Aro',
+    whatsappUrl: 'https://wa.me/2348000000000?text=Old%20message',
+  });
+
+  const [url] = opened[0];
+  const parsed = new URL(url);
+  assert.equal(parsed.pathname, '/2348000000000');
+  assert.match(parsed.searchParams.get('text'), /my name is Ada/);
 });

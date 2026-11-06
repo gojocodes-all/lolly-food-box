@@ -46,12 +46,16 @@ Opening `index.html` directly also renders the page, but a local HTTP server mor
 - Update colours, spacing, layout, and responsive breakpoints in `style.css`.
 - Update interaction behaviour in `script.js`.
 
-The WhatsApp destination appears in both `script.js` and `index.html`. When the business number changes, update:
+The floating link with `id="whatsappLink"` in `index.html` is the canonical
+runtime destination for both order paths. The form reads that published link
+instead of keeping a second number in JavaScript. When the business number
+changes, update:
 
-1. The order-form URL constructed in `script.js`.
-2. The floating WhatsApp link and visible contact copy in `index.html`.
+1. The floating WhatsApp link in `index.html`.
+2. The visible contact copy in `index.html`.
 
-Keeping all three values aligned prevents orders from being sent to an outdated destination.
+The integrity suite prevents the link and visible number from drifting apart
+and rejects a second hard-coded WhatsApp endpoint in `script.js`.
 
 ## Ordering and privacy
 

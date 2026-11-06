@@ -1,5 +1,25 @@
 # Maintenance log
 
+## 2026-11-06 — Use one runtime WhatsApp destination
+
+- **Rationale:** The order form and floating shortcut stored separate hard-coded
+  WhatsApp endpoints. Updating the business number therefore required a
+  coordinated JavaScript edit, and a missed copy could silently send customer
+  orders to the old account.
+- **Files changed:** `index.html` identifies the published WhatsApp link as the
+  canonical endpoint; `script.js` validates and reuses that link for generated
+  orders; the order and integrity suites cover configuration reuse;
+  `README.md` documents the simpler update path; and this log records the work.
+- **Validation performed:** `npm run validate` (12 tests); `git diff --check`;
+  and complete diff review for order routing, URL encoding, opener isolation,
+  accessibility, security, backward compatibility, and repository conventions.
+- **Risk level:** Low. The public number, visible contact, message wording,
+  `wa.me` host, new-tab behavior, and static deployment model are unchanged.
+  Only the source of the form destination changes from duplicated JavaScript to
+  the existing published HTML link.
+- **Rollback:** Revert this pull request's squash commit to restore the
+  JavaScript-specific WhatsApp endpoint.
+
 ## 2026-10-30 — Add persistent labels to the order form
 
 - **Rationale:** The primary ordering form identified text fields only through

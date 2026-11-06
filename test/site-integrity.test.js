@@ -25,17 +25,19 @@ test('every fragment link targets an element on the page', () => {
   assert.deepEqual(missing, []);
 });
 
-test('all WhatsApp order paths use the published contact number', () => {
+test('the single WhatsApp endpoint matches the published contact number', () => {
   const endpointNumbers = [
     ...[...html.matchAll(/https:\/\/wa\.me\/(\d+)/g)].map(([, number]) => number),
-    ...[...script.matchAll(/https:\/\/wa\.me\/(\d+)/g)].map(([, number]) => number),
   ];
   const contact = html.match(/WhatsApp:\s*\+?([\d\s]+)/);
   assert.ok(contact, 'Expected a visible WhatsApp contact number');
 
   const contactNumber = contact[1].replace(/\s/g, '');
-  assert.equal(endpointNumbers.length, 2);
+  assert.equal(endpointNumbers.length, 1);
   assert.deepEqual([...new Set(endpointNumbers)], [contactNumber]);
+  assert.match(html, /id="whatsappLink"[^>]+href="https:\/\/wa\.me\/\d+/);
+  assert.match(html, /id="whatsappLink"[^>]+target="_blank"[^>]+rel="noopener"/);
+  assert.doesNotMatch(script, /https:\/\/wa\.me\/\d+/);
 });
 
 test('order fields have persistent labels and useful autocomplete hints', () => {
