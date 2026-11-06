@@ -39,6 +39,10 @@ function loadSite({ reduceMotion, supportsIntersectionObserver = true }) {
     nav: createElement(),
     navToggle: createElement(),
     orderForm: createElement(),
+    whatsappLink: {
+      ...createElement(),
+      href: 'https://wa.me/2349033713869?text=Place%20an%20order',
+    },
   };
   const revealItems = [createElement(), createElement()];
   const observed = [];
@@ -55,6 +59,7 @@ function loadSite({ reduceMotion, supportsIntersectionObserver = true }) {
       },
     },
     setTimeout(callback, delay) { scheduled.push({ callback, delay }); },
+    URL,
     window: {
       addEventListener(type, listener) { windowListeners.set(type, listener); },
       matchMedia(query) {

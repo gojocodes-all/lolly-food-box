@@ -43,6 +43,20 @@ const form = document.getElementById('orderForm');
 const nameInput = document.getElementById('name');
 const mealInput = document.getElementById('meal');
 const locationInput = document.getElementById('location');
+const whatsappLink = document.getElementById('whatsappLink');
+
+const readWhatsAppDestination = (link) => {
+  const destination = new URL(link.href);
+  const hasPhonePath = /^\/\d+$/.test(destination.pathname);
+  if (destination.protocol !== 'https:' || destination.hostname !== 'wa.me' || !hasPhonePath) {
+    throw new Error('The published WhatsApp link is invalid.');
+  }
+  destination.search = '';
+  destination.hash = '';
+  return destination;
+};
+
+const whatsappDestination = readWhatsAppDestination(whatsappLink);
 
 const readRequiredText = (input, message) => {
   const value = input.value.trim();
@@ -65,5 +79,7 @@ form.addEventListener('submit', (e) => {
 
   const meal = mealInput.value;
   const msg = `Hello Lolly Food Box, my name is ${name}. I want to order: ${meal}. Location: ${location}.`;
-  window.open(`https://wa.me/2349033713869?text=${encodeURIComponent(msg)}`, '_blank', 'noopener');
+  const orderUrl = new URL(whatsappDestination);
+  orderUrl.searchParams.set('text', msg);
+  window.open(orderUrl.href, '_blank', 'noopener');
 });
