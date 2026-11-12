@@ -6,6 +6,7 @@ const test = require('node:test');
 const root = resolve(__dirname, '..');
 const html = readFileSync(resolve(root, 'index.html'), 'utf8');
 const script = readFileSync(resolve(root, 'script.js'), 'utf8');
+const style = readFileSync(resolve(root, 'style.css'), 'utf8');
 
 test('every local page resource exists', () => {
   const references = [...html.matchAll(/(?:src|href)="([^"]+)"/g)]
@@ -53,5 +54,13 @@ test('order fields have persistent labels and useful autocomplete hints', () => 
   assert.match(
     form,
     /<input[^>]+id="location"[^>]+autocomplete="street-address"/,
+  );
+});
+
+test('fixed header leaves fragment destinations visible', () => {
+  assert.match(
+    style,
+    /html\s*\{[^}]*scroll-padding-top:\s*100px/,
+    'Expected the document scroll offset to clear the fixed header',
   );
 });
