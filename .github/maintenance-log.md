@@ -1,5 +1,26 @@
 # Maintenance log
 
+## 2026-11-12 — Keep linked sections clear of the fixed header
+
+- **Rationale:** Every primary navigation item links to an in-page fragment, but
+  the fixed header had no document scroll offset. Browser fragment navigation
+  could therefore align a section heading behind the header, obscuring the
+  destination users had selected, especially on smaller screens.
+- **Files changed:** `style.css` adds a document-level anchor offset sized above
+  the header; `test/site-integrity.test.js` locks that usability contract;
+  `README.md` documents the navigation behavior; and this log records the work.
+- **Validation performed:** proposed CSS and JavaScript test syntax parsed;
+  focused anchor-offset assertion passed; the pull-request workflow runs the
+  complete dependency-free `npm run validate` suite; complete diff review for
+  desktop and mobile navigation, reduced motion, accessibility, security,
+  backward compatibility, and repository conventions.
+- **Risk level:** Low. The header, link destinations, section layout, JavaScript,
+  ordering flow, content, and visual design are unchanged. The offset affects
+  browser scrolling to fragment identifiers only.
+- **Rollback:** Revert this pull request's squash commit to restore the previous
+  fragment alignment; no data, dependency, deployment, or configuration rollback
+  is required.
+
 ## 2026-11-06 — Use one runtime WhatsApp destination
 
 - **Rationale:** The order form and floating shortcut stored separate hard-coded
