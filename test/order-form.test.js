@@ -47,6 +47,7 @@ function loadOrderForm({
   const opened = [];
   const context = {
     document: {
+      addEventListener() {},
       getElementById(id) { return elements[id]; },
       querySelectorAll() { return []; },
     },

@@ -5,7 +5,9 @@ A responsive, single-page website for Lolly Food Box in Oke-Aro, Ogun State. The
 ## What the site does
 
 - Presents menu categories, selected prices, gallery images, and store details.
-- Provides responsive desktop and mobile navigation while keeping linked section headings visible below the fixed header.
+- Provides responsive desktop and mobile navigation, supports closing the open
+  mobile menu with Escape, and keeps linked section headings visible below the
+  fixed header.
 - Reveals page sections as they enter the viewport.
 - Respects the visitor's reduced-motion preference by skipping delayed and
   animated entrances.
@@ -73,8 +75,9 @@ npm run validate
 
 GitHub Actions runs the same syntax and test command for pull requests and
 changes to `main`. In addition to the order-form behavior, the suite verifies
-the reduced-motion runtime path, local resources, fragment links, and that every
-WhatsApp order path matches the published contact number.
+the reduced-motion runtime path, mobile navigation keyboard behavior, local
+resources, fragment links, and that every WhatsApp order path matches the
+published contact number.
 
 Before publishing a content change:
 

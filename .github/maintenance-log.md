@@ -1,5 +1,27 @@
 # Maintenance log
 
+## 2026-11-16 — Make the mobile menu keyboard-dismissible
+
+- **Rationale:** The responsive menu exposed its open state to assistive
+  technology, but keyboard users could close it only by activating the toggle
+  again or following a link. Escape now dismisses an open menu and returns
+  focus to the control that opened it, matching established disclosure
+  behavior without changing the visual design.
+- **Files changed:** `script.js` adds Escape-key dismissal and focus recovery;
+  `test/navigation.test.js` covers menu state, keyboard dismissal, and the
+  existing link-close path; the existing VM test fixtures support the new
+  document-level listener; `package.json` includes the new test in syntax
+  validation; `README.md` documents the behavior; and this log records the work.
+- **Validation performed:** `npm run validate`; `git diff --check`; and complete
+  diff review for desktop and mobile behavior, keyboard accessibility,
+  security, backward compatibility, and repository conventions.
+- **Risk level:** Low. The new listener acts only when the menu is open and the
+  pressed key is Escape. Mouse/touch toggling, link navigation, responsive
+  layout, ordering, contact details, and page content are unchanged.
+- **Rollback:** Revert this pull request's squash commit to remove Escape-key
+  dismissal and its regression coverage; no data, dependency, deployment, or
+  configuration rollback is required.
+
 ## 2026-11-12 — Keep linked sections clear of the fixed header
 
 - **Rationale:** Every primary navigation item links to an in-page fragment, but
