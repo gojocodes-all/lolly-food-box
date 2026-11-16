@@ -53,6 +53,7 @@ function loadSite({ reduceMotion, supportsIntersectionObserver = true }) {
 
   const context = {
     document: {
+      addEventListener() {},
       getElementById(id) { return elements[id]; },
       querySelectorAll(selector) {
         return selector === '.reveal' ? revealItems : [];

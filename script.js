@@ -23,6 +23,11 @@ navToggle.setAttribute('aria-controls', 'nav');
 setNavOpen(false);
 navToggle.addEventListener('click', () => setNavOpen(!nav.classList.contains('active')));
 document.querySelectorAll('.nav a').forEach(link => link.addEventListener('click', () => setNavOpen(false)));
+document.addEventListener('keydown', (event) => {
+  if (event.key !== 'Escape' || !nav.classList.contains('active')) return;
+  setNavOpen(false);
+  navToggle.focus();
+});
 
 const revealItems = document.querySelectorAll('.reveal');
 
