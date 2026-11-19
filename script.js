@@ -1,11 +1,5 @@
 const loader = document.getElementById('loader');
-const prefersReducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
-
-window.addEventListener('load', () => {
-  const hideLoader = () => loader.classList.add('hide');
-  if (prefersReducedMotion) hideLoader();
-  else setTimeout(hideLoader, 650);
-});
+window.addEventListener('load', () => setTimeout(() => loader.classList.add('hide'), 650));
 
 const header = document.getElementById('header');
 window.addEventListener('scroll', () => header.classList.toggle('scrolled', window.scrollY > 20));
@@ -23,68 +17,20 @@ navToggle.setAttribute('aria-controls', 'nav');
 setNavOpen(false);
 navToggle.addEventListener('click', () => setNavOpen(!nav.classList.contains('active')));
 document.querySelectorAll('.nav a').forEach(link => link.addEventListener('click', () => setNavOpen(false)));
-document.addEventListener('keydown', (event) => {
-  if (event.key !== 'Escape' || !nav.classList.contains('active')) return;
-  setNavOpen(false);
-  navToggle.focus();
-});
 
-const revealItems = document.querySelectorAll('.reveal');
-
-if (prefersReducedMotion || typeof IntersectionObserver !== 'function') {
-  revealItems.forEach(element => element.classList.add('show'));
-} else {
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (!entry.isIntersecting) return;
-      entry.target.classList.add('show');
-      observer.unobserve(entry.target);
-    });
-  }, { threshold: 0.15 });
-  revealItems.forEach(element => observer.observe(element));
-}
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) entry.target.classList.add('show');
+  });
+}, { threshold: 0.15 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
 const form = document.getElementById('orderForm');
-const nameInput = document.getElementById('name');
-const mealInput = document.getElementById('meal');
-const locationInput = document.getElementById('location');
-const whatsappLink = document.getElementById('whatsappLink');
-
-const readWhatsAppDestination = (link) => {
-  const destination = new URL(link.href);
-  const hasPhonePath = /^\/\d+$/.test(destination.pathname);
-  if (destination.protocol !== 'https:' || destination.hostname !== 'wa.me' || !hasPhonePath) {
-    throw new Error('The published WhatsApp link is invalid.');
-  }
-  destination.search = '';
-  destination.hash = '';
-  return destination;
-};
-
-const whatsappDestination = readWhatsAppDestination(whatsappLink);
-
-const readRequiredText = (input, message) => {
-  const value = input.value.trim();
-  input.setCustomValidity(value ? '' : message);
-  if (!value) input.reportValidity();
-  return value;
-};
-
-[nameInput, locationInput].forEach(input => {
-  input.addEventListener('input', () => input.setCustomValidity(''));
-});
-
 form.addEventListener('submit', (e) => {
   e.preventDefault();
-  const name = readRequiredText(nameInput, 'Please enter your name.');
-  if (!name) return;
-
-  const location = readRequiredText(locationInput, 'Please enter a pickup or delivery location.');
-  if (!location) return;
-
-  const meal = mealInput.value;
+  const name = document.getElementById('name').value.trim();
+  const meal = document.getElementById('meal').value;
+  const location = document.getElementById('location').value.trim();
   const msg = `Hello Lolly Food Box, my name is ${name}. I want to order: ${meal}. Location: ${location}.`;
-  const orderUrl = new URL(whatsappDestination);
-  orderUrl.searchParams.set('text', msg);
-  window.open(orderUrl.href, '_blank', 'noopener');
+  window.open(`https://wa.me/2349033713869?text=${encodeURIComponent(msg)}`, '_blank');
 });
